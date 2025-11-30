@@ -7,7 +7,7 @@ from datetime import datetime
 def connect_db():
     return mysql.connector.connect(
         host="localhost",
-        user="root",           # thay user MySQL của em nếu khác
+        user="qltuyen_dulich",           # thay user MySQL của em nếu khác
         password="",           # thay password nếu có
         database="qltuyen_dulich",
         charset='utf8mb4'
@@ -62,10 +62,6 @@ tk.Label(frame_info, text="Giá tiền (VNĐ)", font=("Arial", 10)).grid(row=2, 
 entry_giatien = tk.Entry(frame_info, width=25, font=("Arial", 10))
 entry_giatien.grid(row=2, column=3, padx=10, pady=8, sticky="w")
 
-# Dòng 4 - Mô tả
-tk.Label(frame_info, text="Mô tả", font=("Arial", 10)).grid(row=3, column=0, padx=10, pady=8, sticky="nw")
-text_mota = tk.Text(frame_info, width=70, height=4, font=("Arial", 10))
-text_mota.grid(row=3, column=1, columnspan=3, padx=10, pady=8, sticky="w")
 
 # ====== Bảng danh sách tuyến du lịch ======
 lbl_ds = tk.Label(root, text="Danh sách các tuyến du lịch", font=("Arial", 12, "bold"))
@@ -80,7 +76,7 @@ tree.heading("diemdi", text="Điểm đi")
 tree.heading("diemden", text="Điểm đến")
 tree.heading("songay", text="Số ngày")
 tree.heading("giatien", text="Giá tiền (VNĐ)")
-tree.heading("mota", text="Mô tả")
+
 
 tree.column("matuyen", width=70, anchor="center")
 tree.column("tentuyen", width=220)
@@ -88,7 +84,7 @@ tree.column("diemdi", width=120)
 tree.column("diemden", width=120)
 tree.column("songay", width=80, anchor="center")
 tree.column("giatien", width=120, anchor="e")
-tree.column("mota", width=200)
+
 
 tree.pack(padx=20, pady=10, fill="both", expand=True)
 
@@ -102,8 +98,7 @@ def clear_input():
     entry_diemden.delete(0, tk.END)
     entry_songay.delete(0, tk.END)
     entry_giatien.delete(0, tk.END)
-    text_mota.delete("1.0", tk.END)
-
+    
 def load_data():
     for i in tree.get_children():
         tree.delete(i)
@@ -126,7 +121,7 @@ def them_tuyen():
     diemden = entry_diemden.get().strip()
     songay = entry_songay.get().strip()
     giatien = entry_giatien.get().strip()
-    mota = text_mota.get("1.0", tk.END).strip()
+    
 
     if not (tentuyen and diemdi and diemden and songay.isdigit() and giatien.replace(".","").isdigit()):
         messagebox.showwarning("Thiếu dữ liệu", "Vui lòng nhập đầy đủ và đúng định dạng!")
@@ -171,8 +166,7 @@ def sua_tuyen():
     entry_songay.insert(0, values[4])
     entry_giatien.delete(0, tk.END)
     entry_giatien.insert(0, str(values[5]).replace(".", ""))
-    text_mota.delete("1.0", tk.END)
-    text_mota.insert("1.0", values[6])
+    
 
 def luu_tuyen():
     selected = tree.selection()
@@ -186,7 +180,7 @@ def luu_tuyen():
     diemden = entry_diemden.get().strip()
     songay = entry_songay.get().strip()
     giatien = entry_giatien.get().strip()
-    mota = text_mota.get("1.0", tk.END).strip()
+    
 
     if not (tentuyen and diemdi and diemden and songay.isdigit() and giatien.replace(".","").isdigit()):
         messagebox.showwarning("Lỗi", "Dữ liệu không hợp lệ!")
